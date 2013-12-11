@@ -1,4 +1,3 @@
-# .bashrc
 export EDITOR="vim"
 
 export LESS="$LESS -iR"
@@ -25,9 +24,8 @@ if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
 
-OS=$(lsb_release -si)
 WORKON_HOME=$HOME/.virtualenvs
-if [ "$OS" == "Ubuntu" ]; then
+if hash apt-get 2>/dev/null; then
     possible_scripts='/usr/local/bin/virtualenvwrapper.sh /etc/bash_completion.d/virtualenvwrapper'
     for script in $possible_scripts; do
       [[ -f $script ]] && source $script
