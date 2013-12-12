@@ -9,13 +9,14 @@ Bundle 'SuperTab-continued.'
 Bundle 'The-NERD-tree'
 Bundle 'taglist.vim'
 Bundle 'TagHighlight'
+Bundle 'ack.vim'
 
 " General {
     filetype plugin indent on
     syntax enable          "turn syntax highlighting on
     set autowrite      "automatically write file on exit
     set clipboard+=unnamed "Yanks go to clipboard
-    colorscheme slate "pick a decent colorscheme
+    colorscheme desert "pick a decent colorscheme
 
     " Re-source .vimrc whenever the file changes
     autocmd BufWritePost ~/.vimrc source %
