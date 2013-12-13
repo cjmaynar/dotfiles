@@ -1,24 +1,23 @@
-dir=~/dotfiles # dotfiles directory
-olddir=~/dotfiles_old # old dotfiles backup directory
-files="ackrc bashrc vimrc bash_aliases bash_functions tmux.conf" # list of files/folders to symlink in homedir
+DIR=~/dotfiles # dotfiles directory
+OLDDIR=~/dotfiles_old # old dotfiles backup directory
+# list of files/folders to symlink in homedir
+FILES="ackrc bashrc vimrc bash_aliases bash_functions tmux.conf"
 
-# create dotfiles_old in homedir
-mkdir -p $olddir
+mkdir -p $OLDDIR
+cd $DIR
 
-# change to the dotfiles directory
-cd $dir
-
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
-for file in $files; do
-    mv ~/.$file ~/dotfiles_old/
+# move any existing dotfiles in homedir to dotfiles_old directory, then create
+# symlinks from the homedir to any files in the ~/dotfiles directory specified
+# in $files
+for file in $FILES; do
+    mv ~/.$file $OLDDIR/
     echo "Creating symlink to $file in home directory."
-    ln -s $dir/$file ~/.$file
+    ln -s $DIR/$file ~/.$file
 done
 
-
-echo "Installing any system dependencies - ^C to cancel"
+echo "Installing missing any system dependencies - ^C to cancel"
 if hash yum 2>/dev/null; then
-    sudo yum install ctags python-virtualenvwrapper tmux git
+    sudo yum install ctags python-virtualenvwrapper tmux git ack
 else
     sudo apt-get install exuberant-ctags tmux git
 fi

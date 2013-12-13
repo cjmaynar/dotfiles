@@ -24,6 +24,12 @@ if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
 
+# Source a file of functions/aliases that are system unique
+# Used to include things I don't want to get versioned
+if [ -f ~/.bash_untracked ]; then
+    . ~/.bash_untracked
+fi
+
 WORKON_HOME=$HOME/.virtualenvs
 if hash apt-get 2>/dev/null; then
     possible_scripts='/usr/local/bin/virtualenvwrapper.sh /etc/bash_completion.d/virtualenvwrapper'

@@ -30,6 +30,9 @@ Bundle 'ack.vim'
     set nowb
     set noswapfile
     "
+    highlight ColorColumn ctermbg=magenta
+    call matchadd('ColorColumn', '\%81v', 100)
+
 " }
 
 " vim UI {
