@@ -10,6 +10,8 @@ Bundle 'The-NERD-tree'
 Bundle 'taglist.vim'
 Bundle 'TagHighlight'
 Bundle 'ack.vim'
+Bundle 'Syntastic'
+Bundle 'jslint.vim'
 
 " General {
     filetype plugin indent on
@@ -29,7 +31,8 @@ Bundle 'ack.vim'
     set nobackup
     set nowb
     set noswapfile
-    "
+
+    " Mark 81st color for highlight
     highlight ColorColumn ctermbg=magenta
     call matchadd('ColorColumn', '\%81v', 100)
 
@@ -114,5 +117,6 @@ Bundle 'ack.vim'
 
     "Fold HTML tags
     nnoremap <leader>ft Vatzf
+
 " }
 "

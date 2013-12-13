@@ -1,7 +1,7 @@
 DIR=~/dotfiles # dotfiles directory
 OLDDIR=~/dotfiles_old # old dotfiles backup directory
 # list of files/folders to symlink in homedir
-FILES="ackrc bashrc vimrc bash_aliases bash_functions tmux.conf"
+FILES="ackrc bashrc vimrc bash_aliases bash_functions tmux.conf pylintrc"
 
 mkdir -p $OLDDIR
 cd $DIR
@@ -17,7 +17,7 @@ done
 
 echo "Installing missing any system dependencies - ^C to cancel"
 if hash yum 2>/dev/null; then
-    sudo yum install ctags python-virtualenvwrapper tmux git ack
+    sudo yum install ctags python-virtualenvwrapper tmux git ack pylint nodejs
 else
     sudo apt-get install exuberant-ctags tmux git
 fi
