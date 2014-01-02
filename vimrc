@@ -12,6 +12,7 @@ Bundle 'TagHighlight'
 Bundle 'ack.vim'
 Bundle 'Syntastic'
 Bundle 'jslint.vim'
+Bundle 'pydoc.vim'
 
 " General {
     filetype plugin indent on
@@ -117,6 +118,4 @@ Bundle 'jslint.vim'
 
     "Fold HTML tags
     nnoremap <leader>ft Vatzf
-
 " }
-"
