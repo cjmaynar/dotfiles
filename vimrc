@@ -13,6 +13,7 @@ Bundle 'ack.vim'
 Bundle 'Syntastic'
 Bundle 'jslint.vim'
 Bundle 'pydoc.vim'
+Bundle 'RelOps'
 
 " General {
     filetype plugin indent on
