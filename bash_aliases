@@ -9,4 +9,4 @@ alias ping="ping -c 3"
 alias ll="ls -la"
 
 alias run="python manage.py runserver 0.0.0.0:9001"
-alias shell="python manage.py shell"
+alias shell="python manage.py shell_plus"

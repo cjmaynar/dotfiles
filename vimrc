@@ -130,8 +130,12 @@ Bundle 'RelOps'
 
     "Fold HTML tags
     nnoremap <leader>ft Vatzf
+
+    nmap <left> :3wincmd <<CR>
+    nmap <right> :3wincmd ><CR>
+    nmap <up> :3wincmd +<CR>
+    nmap <down> :3wincmd -<CR>
 " }
-"
 
 " Clear last search highlighting with enter and clear the command line
 function! MapCR()
