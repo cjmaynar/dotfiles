@@ -14,6 +14,7 @@ Bundle 'Syntastic'
 Bundle 'jslint.vim'
 Bundle 'pydoc.vim'
 Bundle 'RelOps'
+Bundle 'kien/ctrlp.vim'
 
 " General {
     filetype plugin indent on
@@ -135,6 +136,16 @@ Bundle 'RelOps'
     nmap <right> :3wincmd ><CR>
     nmap <up> :3wincmd +<CR>
     nmap <down> :3wincmd -<CR>
+
+
+    let g:ctrlp_map = '<c-p>'
+    let g:ctrlp_cmd = 'CtrlP'
+    let g:ctrlp_match_window = 'bottom,order:ttb'
+    let g:ctrlp_switch_buffer = 0
+    let g:ctrlp_working_path_mode = 0
+    let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|\.(o|swp|pyc|egg)$'
+
+    
 " }
 
 " Clear last search highlighting with enter and clear the command line
