@@ -19,8 +19,10 @@ echo "Installing missing any system dependencies - ^C to cancel"
 if hash yum 2>/dev/null; then
     sudo yum install ctags python-virtualenvwrapper tmux git ack pylint nodejs
 else
-    sudo apt-get install exuberant-ctags tmux git
+    sudo apt-get install exuberant-ctags tmux git pyflakes
 fi
+
+sudo npm install -g jshint
 
 echo "Installing VIM bundles"
 vim +BundleInstall +qall

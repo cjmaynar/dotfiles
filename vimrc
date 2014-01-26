@@ -11,25 +11,24 @@ Bundle 'taglist.vim'
 Bundle 'TagHighlight'
 Bundle 'ack.vim'
 Bundle 'Syntastic'
-Bundle 'jslint.vim'
 Bundle 'pydoc.vim'
 Bundle 'RelOps'
 Bundle 'kien/ctrlp.vim'
+Bundle 'bling/vim-airline'
+Bundle 'altercation/vim-colors-solarized'
 
 " General {
     filetype plugin indent on
     syntax enable          "turn syntax highlighting on
-    set autowrite      "automatically write file on exit
+    set autowrite          "automatically write file on exit
     set clipboard+=unnamed "Yanks go to clipboard
-    colorscheme desert "pick a decent colorscheme
+    colorscheme solarized  "pick a decent colorscheme
+    set background=dark    "set the background to dark
 
-    " Re-source .vimrc whenever the file changes
-    autocmd BufWritePost ~/.vimrc source %
     let mapleader = ","
     let g:mapleader = ","
 
     set hidden "Allow unsaved files to be hidden
-
     "Turn off backup since everything is tracked in version control
     set nobackup
     set nowb
@@ -38,7 +37,6 @@ Bundle 'kien/ctrlp.vim'
     " Mark 81st color for highlight
     highlight ColorColumn ctermbg=magenta
     call matchadd('ColorColumn', '\%81v', 100)
-
 " }
 
 " vim UI {
@@ -66,17 +64,14 @@ Bundle 'kien/ctrlp.vim'
     set backspace=indent,eol,start
     " Invisible characters
     set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_,extends:❯,precedes:❮
-
-    set linespace=0
+    set linespace=0                "keep chars right next to eachother
     set nu                         "show line numbers
-
     set showmatch                  "show matching brackets/prarens
     set hlsearch                   "highlight searches
     set incsearch                  "highlight as you search
     set ignorecase                 "case insensitve search
     set smartcase                  "if searching with caps, require them
     set gdefault                   "set global replace as default
-
     set wildmenu                   "show list instead of just completing
     set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png,*.cml
     set wildmode=list:longest,full "completion: list matches, longest common part, then all
@@ -89,15 +84,21 @@ Bundle 'kien/ctrlp.vim'
     set shiftwidth=4 "use indents of 4 spaces
     set tabstop=4
     set expandtab    "use spaces for tabs
-    set smarttab
+    set smarttab     "work with the new tab settings
+
+    match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$' " Highlight merge conflicts
 " }
 
 " Remaps {
+    set gdefault                   "s/foo/bar -> s/foo/bar/g
+
     " Turn off Vim's regex handling
     nnoremap / /\v
     vnoremap / /\v
 
+    " make getting out of insert easier
     imap jj <esc>
+    " save a key press
     map ; :
     " make moving thorugh windows easier
     map <C-j> <C-w>j
@@ -120,14 +121,14 @@ Bundle 'kien/ctrlp.vim'
     "Swich working directory to dir of open buffe"
     map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-    nnoremap <leader<space> :noh<cr>
-
     " Make tab move between matching brackets
     nnoremap <tab> %
     vnoremap <tab> %
 
     map <leader>f <Esc>:NERDTreeToggle<CR>
     map <leader>t <Esc>:TlistToggle<CR>
+    " toggle set paste
+    noremap <leader>p :set paste!<CR>
 
     "Fold HTML tags
     nnoremap <leader>ft Vatzf
@@ -136,16 +137,6 @@ Bundle 'kien/ctrlp.vim'
     nmap <right> :3wincmd ><CR>
     nmap <up> :3wincmd +<CR>
     nmap <down> :3wincmd -<CR>
-
-
-    let g:ctrlp_map = '<c-p>'
-    let g:ctrlp_cmd = 'CtrlP'
-    let g:ctrlp_match_window = 'bottom,order:ttb'
-    let g:ctrlp_switch_buffer = 0
-    let g:ctrlp_working_path_mode = 0
-    let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|\.(o|swp|pyc|egg)$'
-
-    
 " }
 
 " Clear last search highlighting with enter and clear the command line
@@ -156,3 +147,25 @@ function! MapCR()
 
 " Re-highlight last search pattern
 nnoremap <leader>hs :set hlsearch<cr>
+
+
+" Plugin Specific configuration {
+    " CtrlP settings
+    let g:ctrlp_map = '<c-p>'
+    let g:ctrlp_cmd = 'CtrlP'
+    let g:ctrlp_match_window = 'bottom,order:ttb'
+    let g:ctrlp_switch_buffer = 0
+    let g:ctrlp_working_path_mode = 0
+    let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|\.(o|swp|pyc|egg)$'
+
+    " vim-airline settings
+    " when only one tab is open, show all of the open buffers
+    let g:airline#extensions#tabline#enabled = 1
+    " user powerline patched fonts
+    let g:airline_powerline_fonts = 1
+    " dict of configurably unicode symbols. mmmmmmmmmm
+    let g:airline_symbols = {}
+    let g:airline_symbols.branch = '⎇'
+    let g:airline_symbols.paste = 'ρ'
+    let g:airline_symbols.whitespace = 'Ξ'
+" }
