@@ -1,3 +1,5 @@
+# The install script for the environment.
+
 DIR=~/dotfiles # dotfiles directory
 OLDDIR=~/dotfiles_old # old dotfiles backup directory
 # list of files to symlink in homedir
@@ -34,19 +36,41 @@ fi
 sudo npm install -g jshint
 
 # Enable bash completion of git subcommands
-SCRIPT=https://raw.github.com/git/git/master/contrib/completion/git-completion.bash
-wget -O ~/.git-completion.bash $SCRIPT
+script=https://raw.github.com/git/git/master/contrib/completion/git-completion.bash
+wget -O ~/.git-completion.bash $script
 
 
-echo "Installing VIM bundles"
+echo "Installing VIM bundles.."
 vim +BundleInstall +qall
+echo
 
 source ~/.bashrc
 
-# Use vimdiff for git
-git config --global alias.d difftool
-git config --global alias.stat status
-git config --global branch.master.rebase true
-git config --global diff.tool vimdiff
-git config --global difftool.prompt false
-git config --global merge.tool vimdiff
+# If there is no gitconfig file, copy, but don't link the one from the repo
+# we do it this way because we're modifying the file below locally, and don't
+# want to have the changes go into git
+if [ ! -f ~/.gitconfig ]; then
+    echo "Creating gitconfig file"
+    cp gitconfig ~/.gitconfig
+fi
+
+USER=`whoami`
+GITCONFIG="/home/$USER/.gitconfig"
+# If the user section of the gitconfig file is not setup, take care of that
+# by promting the user for the info
+if ! grep -q 'user' ~/.gitconfig; then
+    echo "Configuring git user settings..."
+
+    read -p "What is your name? " name
+    if [ ! -z "$name" ]; then
+        git config --global user.name "$name"
+    fi
+
+    read -p "What is your email? " email
+    if [ ! -z "$email" ]; then
+        git config --global user.email $email
+    fi
+fi
+
+echo
+echo "Setup Complete!"
