@@ -40,3 +40,4 @@ else
     source virtualenvwrapper.sh
 fi
 
+source ~/.git-completion.bash

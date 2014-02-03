@@ -46,6 +46,7 @@ Bundle 'altercation/vim-colors-solarized'
     set history=100 "Default was 20
     set ruler "Show the cursor location
     set laststatus=2 "always show status line
+    " Made uncessary by airline plugin
     "set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%l,%v]
     "              | | | | |  |   |      |  |     |  |
     "              | | | | |  |   |      |  |     |  +- current col
