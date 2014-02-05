@@ -9,3 +9,5 @@
 	stat = status -sb
 [branch "master"]
 	rebase = true
+[push]
+	default = simple
