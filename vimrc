@@ -15,14 +15,13 @@ Bundle 'pydoc.vim'
 Bundle 'RelOps'
 Bundle 'kien/ctrlp.vim'
 Bundle 'bling/vim-airline'
-Bundle 'altercation/vim-colors-solarized'
 
 " General {
     filetype plugin indent on
     syntax enable          "turn syntax highlighting on
     set autowrite          "automatically write file on exit
     set clipboard+=unnamed "Yanks go to clipboard
-    colorscheme solarized  "pick a decent colorscheme
+    colorscheme desert  "pick a decent colorscheme
     set background=dark    "set the background to dark
 
     let mapleader = ","
@@ -91,7 +90,7 @@ Bundle 'altercation/vim-colors-solarized'
 " }
 
 " Remaps {
-    set gdefault                   "s/foo/bar -> s/foo/bar/g
+    set gdefault     "s/foo/bar -> s/foo/bar/g
 
     " Turn off Vim's regex handling
     nnoremap / /\v
@@ -106,33 +105,31 @@ Bundle 'altercation/vim-colors-solarized'
     map <C-k> <C-w>k
     map <C-h> <C-w>h
     map <C-l> <C-w>l
-
     "Treat long lines as break lines
     map j gj
     map k gk
-
     "Map space to search and ctr-space to back search
     map <space> /
     map <C-space> ?
-
-    "EX mode doesn't do much for me, so map Q to run the macro
-    "in the q register: qq = record, Q = run it
+    " EX mode doesn't do much for me, so map Q to run the macro
+    " in the q register: qq = record, Q = run it
     map Q @q
-
-    "Swich working directory to dir of open buffe"
+    " Swich working directory to dir of open buffer
     map <leader>cd :cd %:p:h<cr>:pwd<cr>
+    " Open/Close NERDTree
+    map <leader>f <Esc>:NERDTreeToggle<CR>
+    " Open/Close TagList
+    map <leader>t <Esc>:TlistToggle<CR>
+    " toggle set paste
+    noremap <leader>p :set paste!<CR>
+    " Shortcut for ack
+    nnoremap <leader>a :Ack<Space>
+    "Fold HTML tags
+    nnoremap <leader>ft Vatzf
 
     " Make tab move between matching brackets
     nnoremap <tab> %
     vnoremap <tab> %
-
-    map <leader>f <Esc>:NERDTreeToggle<CR>
-    map <leader>t <Esc>:TlistToggle<CR>
-    " toggle set paste
-    noremap <leader>p :set paste!<CR>
-
-    "Fold HTML tags
-    nnoremap <leader>ft Vatzf
 
     nmap <left> :3wincmd <<CR>
     nmap <right> :3wincmd ><CR>
