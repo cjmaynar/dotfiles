@@ -18,7 +18,8 @@ for file in $FILES; do
     echo "Creating symlink to $file in home directory."
     ln -s $DIR/$file ~/.$file
 done
-ln -s $DIR/vim ~/.vim
+git submodule update
+cp -r $DIR/vim ~/.vim
 
 if [ ! -f ~/.bash_untracked ] ; then
     cat << EOF > ~/.bash_untracked
@@ -30,9 +31,9 @@ fi
 
 echo "Installing any missing system dependencies - ^C to cancel"
 if hash yum 2>/dev/null; then
-    sudo yum install vim ctags python-virtualenvwrapper tmux git ack pylint nodejs wget
+    sudo yum install vim gcc ctags python-virtualenvwrapper tmux git ack pylint nodejs wget npm
 else
-    sudo apt-get install vim exuberant-ctags virtualenvwrapper tmux git pyflakes nodejs wget
+    sudo apt-get install vim gcc exuberant-ctags virtualenvwrapper tmux git pyflakes nodejs wget npm
 fi
 sudo npm install -g jshint
 
