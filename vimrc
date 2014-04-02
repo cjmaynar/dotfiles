@@ -15,13 +15,14 @@ Bundle 'pydoc.vim'
 Bundle 'RelOps'
 Bundle 'kien/ctrlp.vim'
 Bundle 'bling/vim-airline'
+Bundle 'tmhedberg/SimpylFold'
 
 " General {
     filetype plugin indent on
     syntax enable          "turn syntax highlighting on
     set autowrite          "automatically write file on exit
     set clipboard+=unnamed "Yanks go to clipboard
-    colorscheme desert  "pick a decent colorscheme
+    colorscheme desert     "pick a decent colorscheme
     set background=dark    "set the background to dark
 
     let mapleader = ","
@@ -131,6 +132,7 @@ Bundle 'bling/vim-airline'
     nnoremap <tab> %
     vnoremap <tab> %
 
+    " Use the arrow keys for changing window sizes
     nmap <left> :3wincmd <<CR>
     nmap <right> :3wincmd ><CR>
     nmap <up> :3wincmd +<CR>
@@ -166,4 +168,7 @@ nnoremap <leader>hs :set hlsearch<cr>
     let g:airline_symbols.branch = '⎇'
     let g:airline_symbols.paste = 'ρ'
     let g:airline_symbols.whitespace = 'Ξ'
+    
+    " Preview docstrings on folded Python methods
+    let g:SimpylFold_docstring_preview = 1
 " }
