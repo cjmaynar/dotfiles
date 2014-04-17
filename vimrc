@@ -9,13 +9,13 @@ Bundle 'SuperTab-continued.'
 Bundle 'The-NERD-tree'
 Bundle 'taglist.vim'
 Bundle 'TagHighlight'
-Bundle 'ack.vim'
-Bundle 'Syntastic'
 Bundle 'pydoc.vim'
 Bundle 'RelOps'
 Bundle 'kien/ctrlp.vim'
 Bundle 'bling/vim-airline'
 Bundle 'tmhedberg/SimpylFold'
+Bundle 'mileszs/ack.vim'
+Bundle 'scrooloose/syntastic'
 
 " General {
     filetype plugin indent on
@@ -168,7 +168,7 @@ nnoremap <leader>hs :set hlsearch<cr>
     let g:airline_symbols.branch = '⎇'
     let g:airline_symbols.paste = 'ρ'
     let g:airline_symbols.whitespace = 'Ξ'
-    
+
     " Preview docstrings on folded Python methods
     let g:SimpylFold_docstring_preview = 1
 " }
