@@ -5,17 +5,17 @@ set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-Bundle 'SuperTab-continued.'
-Bundle 'The-NERD-tree'
-Bundle 'taglist.vim'
-Bundle 'TagHighlight'
-Bundle 'pydoc.vim'
-Bundle 'RelOps'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'kien/ctrlp.vim'
 Bundle 'bling/vim-airline'
 Bundle 'tmhedberg/SimpylFold'
 Bundle 'mileszs/ack.vim'
 Bundle 'scrooloose/syntastic'
+Bundle 'The-NERD-tree'
+Bundle 'taglist.vim'
+Bundle 'TagHighlight'
+Bundle 'pydoc.vim'
+Bundle 'RelOps'
 
 " General {
     filetype plugin indent on

@@ -31,20 +31,25 @@ fi
 
 echo "Installing any missing system dependencies - ^C to cancel"
 if hash yum 2>/dev/null; then
-    sudo yum install vim gcc ctags python-virtualenvwrapper tmux git ack pylint nodejs wget npm
+    sudo yum install vim gcc ctags python-virtualenvwrapper tmux git ack pylint nodejs wget npm cmake
 else
-    sudo apt-get install vim gcc exuberant-ctags virtualenvwrapper tmux git pyflakes nodejs wget npm
+    sudo apt-get install vim gcc exuberant-ctags virtualenvwrapper tmux git pyflakes nodejs wget npm cmake
 fi
 sudo npm install -g jshint
+sudo pip install jedi
 
 # Enable bash completion of git subcommands
 script=https://raw.github.com/git/git/master/contrib/completion/git-completion.bash
 wget -O ~/.git-completion.bash $script
 
-
 echo "Installing VIM bundles.."
 vim +BundleInstall +qall
 echo
+
+echo "Compiling YouCompleteMe..."
+cd ~/.vim/bundle/YouCompleteMe
+./install.sh
+cd -
 
 source ~/.bashrc
 
