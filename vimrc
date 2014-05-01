@@ -11,6 +11,7 @@ Bundle 'bling/vim-airline'
 Bundle 'tmhedberg/SimpylFold'
 Bundle 'mileszs/ack.vim'
 Bundle 'scrooloose/syntastic'
+Bundle 'Townk/vim-autoclose'
 Bundle 'The-NERD-tree'
 Bundle 'taglist.vim'
 Bundle 'TagHighlight'
@@ -40,12 +41,12 @@ Bundle 'RelOps'
 " }
 
 " vim UI {
-    set ttyfast "Assume a fast connection
-    set showmode "Display the current mode
-    set showcmd "Display incomplete commands below status line
-    set history=100 "Default was 20
-    set ruler "Show the cursor location
-    set laststatus=2 "always show status line
+    set ttyfast      "Assume a fast connection
+    set showmode     "Display the current mode
+    set showcmd      "Display incomplete commands below status line
+    set history=100  "Default was 20
+    set ruler        "Show the cursor location
+    set laststatus=2 "Always show status line
     " Made uncessary by airline plugin
     "set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%l,%v]
     "              | | | | |  |   |      |  |     |  |
@@ -148,7 +149,6 @@ function! MapCR()
 " Re-highlight last search pattern
 nnoremap <leader>hs :set hlsearch<cr>
 
-
 " Plugin Specific configuration {
     " CtrlP settings
     let g:ctrlp_map = '<c-p>'
@@ -171,4 +171,9 @@ nnoremap <leader>hs :set hlsearch<cr>
 
     " Preview docstrings on folded Python methods
     let g:SimpylFold_docstring_preview = 1
+
+    " Close the tip window when an autocomplete selection is made,
+    " or when leaving insert mode
+    autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+    autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 " }
