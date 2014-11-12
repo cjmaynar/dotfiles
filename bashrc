@@ -30,6 +30,10 @@ if [ -f ~/.bash_untracked ]; then
     . ~/.bash_untracked
 fi
 
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
 WORKON_HOME=$HOME/.virtualenvs
 if hash apt-get 2>/dev/null; then
     possible_scripts='/usr/local/bin/virtualenvwrapper.sh /etc/bash_completion.d/virtualenvwrapper'

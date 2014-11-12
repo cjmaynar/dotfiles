@@ -5,7 +5,8 @@ set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe'
+Bundle "valloric/MatchTagAlways"
 Bundle 'kien/ctrlp.vim'
 Bundle 'bling/vim-airline'
 Bundle 'tmhedberg/SimpylFold'
@@ -17,6 +18,11 @@ Bundle 'taglist.vim'
 Bundle 'TagHighlight'
 Bundle 'pydoc.vim'
 Bundle 'RelOps'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Bundle "wookiehangover/jshint.vim"
+
+let g:used_javascript_libs = 'jquery'
 
 " General {
     filetype plugin indent on
@@ -24,7 +30,8 @@ Bundle 'RelOps'
     set autowrite          "automatically write file on exit
     set clipboard+=unnamed "Yanks go to clipboard
     colorscheme desert     "pick a decent colorscheme
-    set background=dark    "set the background to dark
+    set background=light
+    set visualbell         "no beeping"
 
     let mapleader = ","
     let g:mapleader = ","
@@ -61,6 +68,7 @@ Bundle 'RelOps'
     "              | | +- readonly flag
     "              | +- modified flag
     "              +- full path to file
+    set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
 
     " Backspace over everything in insert mode
     set backspace=indent,eol,start
@@ -171,6 +179,8 @@ nnoremap <leader>hs :set hlsearch<cr>
 
     " Preview docstrings on folded Python methods
     let g:SimpylFold_docstring_preview = 1
+
+    let JSHintUpdateWriteOnly=1
 
     " Close the tip window when an autocomplete selection is made,
     " or when leaving insert mode

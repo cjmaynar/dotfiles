@@ -18,6 +18,7 @@ for file in $FILES; do
     echo "Creating symlink to $file in home directory."
     ln -s $DIR/$file ~/.$file
 done
+git submodule init
 git submodule update
 cp -r $DIR/vim ~/.vim
 
@@ -31,12 +32,15 @@ fi
 
 echo "Installing any missing system dependencies - ^C to cancel"
 if hash yum 2>/dev/null; then
-    sudo yum install vim gcc ctags python-virtualenvwrapper tmux git ack pylint nodejs wget npm cmake
+    sudo yum install vim gcc ctags python-virtualenvwrapper tmux git ack pylint nodejs wget npm cmake bash_completion
+elif [ "$(uname)" == "Darwin" ]; then
+    #brew install vim gcc ctags python-virtualenvwrapper tmux git ack pylint nodejs wget npm cmake
+    echo "MAC"
 else
     sudo apt-get install vim gcc exuberant-ctags virtualenvwrapper tmux git pyflakes nodejs wget npm cmake
 fi
-sudo npm install -g jshint
-sudo pip install jedi
+#sudo npm install -g jshint
+#udo pip install jedi
 
 # Enable bash completion of git subcommands
 script=https://raw.github.com/git/git/master/contrib/completion/git-completion.bash
