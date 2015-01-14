@@ -40,3 +40,9 @@ function reload_tags() {
     --regex-PHP='/interface\s+([^ ]+)/\1/i/'
     --regex-PHP='/\$([a-zA-Z_][a-zA-Z0-9_]*)/\1/v/])'
 }
+
+# Delete a line from the known_hosts file; used when the RSA key
+# has changed
+function rmhostkey() {
+    sed -i "$1d" ~/.ssh/known_hosts
+}
