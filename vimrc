@@ -6,23 +6,22 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 "Bundle 'Valloric/YouCompleteMe'
-Bundle "valloric/MatchTagAlways"
-Bundle 'kien/ctrlp.vim'
 Bundle 'bling/vim-airline'
-Bundle 'tmhedberg/SimpylFold'
+Plugin 'jelera/vim-javascript-syntax'
+Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
-Bundle 'scrooloose/syntastic'
+Plugin 'othree/javascript-libraries-syntax.vim'
+"Bundle 'scrooloose/syntastic'
+Bundle 'tmhedberg/SimpylFold'
 Bundle 'Townk/vim-autoclose'
+Bundle 'valloric/MatchTagAlways'
+Bundle 'wookiehangover/jshint.vim'
+
+Bundle 'pydoc.vim'
+Bundle 'RelOps'
 Bundle 'The-NERD-tree'
 Bundle 'taglist.vim'
 Bundle 'TagHighlight'
-Bundle 'pydoc.vim'
-Bundle 'RelOps'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'othree/javascript-libraries-syntax.vim'
-Bundle "wookiehangover/jshint.vim"
-
-let g:used_javascript_libs = 'jquery'
 
 " General {
     filetype plugin indent on
@@ -171,6 +170,7 @@ nnoremap <leader>hs :set hlsearch<cr>
     let g:airline#extensions#tabline#enabled = 1
     " user powerline patched fonts
     let g:airline_powerline_fonts = 1
+    let g:airline_theme = 'murmur'
     " dict of configurably unicode symbols. mmmmmmmmmm
     let g:airline_symbols = {}
     let g:airline_symbols.branch = '⎇'
@@ -181,6 +181,8 @@ nnoremap <leader>hs :set hlsearch<cr>
     let g:SimpylFold_docstring_preview = 1
 
     let JSHintUpdateWriteOnly=1
+
+    let g:used_javascript_libs = 'jquery'
 
     " Close the tip window when an autocomplete selection is made,
     " or when leaving insert mode

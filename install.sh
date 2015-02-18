@@ -3,7 +3,7 @@
 DIR=~/dotfiles # dotfiles directory
 OLDDIR=~/dotfiles_old # old dotfiles backup directory
 # list of files to symlink in homedir
-FILES="ackrc bashrc vimrc bash_aliases bash_functions tmux.conf pylintrc curlrc"
+FILES="ackrc bashrc vimrc bash_aliases bash_functions tmux.conf pylintrc curlrc gitignore_global"
 
 mkdir -p $OLDDIR
 cd $DIR
