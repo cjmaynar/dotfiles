@@ -1,1 +1,3 @@
+# Ignore the directory created by coverage
+--ignore-dir=htmlcov
 --pager=less -r

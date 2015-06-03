@@ -46,3 +46,11 @@ function reload_tags() {
 function rmhostkey() {
     sed -i "$1d" ~/.ssh/known_hosts
 }
+
+# cd to the directory of a python package
+# ex: cdp django.contrib
+cdp() {
+    cd "$(python -c "import os.path as _, ${1}; \
+            print(_.dirname(_.realpath(${1}.__file__[:-1])))"
+        )"
+}

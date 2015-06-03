@@ -7,6 +7,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 "Bundle 'Valloric/YouCompleteMe'
 Bundle 'bling/vim-airline'
+"Bundle 'davidhalter/jedi-vim'
 Plugin 'jelera/vim-javascript-syntax'
 Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
@@ -163,7 +164,7 @@ nnoremap <leader>hs :set hlsearch<cr>
     let g:ctrlp_match_window = 'bottom,order:ttb'
     let g:ctrlp_switch_buffer = 0
     let g:ctrlp_working_path_mode = 0
-    let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|\.(o|swp|pyc|egg)$'
+    let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|htmlcov/|\.(o|swp|pyc|egg)$'
 
     " vim-airline settings
     " when only one tab is open, show all of the open buffers
