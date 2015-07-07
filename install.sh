@@ -32,7 +32,7 @@ fi
 
 echo "Installing any missing system dependencies - ^C to cancel"
 if hash yum 2>/dev/null; then
-    sudo yum install vim gcc ctags python-virtualenvwrapper tmux git ack pylint nodejs wget npm cmake bash_completion
+    sudo yum install vim gcc ctags python-virtualenvwrapper tmux git ack pylint nodejs wget npm cmake bash_completion flake8
 elif [ "$(uname)" == "Darwin" ]; then
     #brew install vim gcc ctags python-virtualenvwrapper tmux git ack pylint nodejs wget npm cmake
     echo "MAC"

@@ -5,19 +5,21 @@ set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-"Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'bling/vim-airline'
 "Bundle 'davidhalter/jedi-vim'
 Plugin 'jelera/vim-javascript-syntax'
+
 Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
 Plugin 'othree/javascript-libraries-syntax.vim'
 "Bundle 'scrooloose/syntastic'
 Bundle 'tmhedberg/SimpylFold'
-Bundle 'Townk/vim-autoclose'
+"Bundle 'Townk/vim-autoclose'
 Bundle 'valloric/MatchTagAlways'
 Bundle 'wookiehangover/jshint.vim'
 
+Bundle 'vim-flake8'
 Bundle 'pydoc.vim'
 Bundle 'RelOps'
 Bundle 'The-NERD-tree'
@@ -29,9 +31,8 @@ Bundle 'TagHighlight'
     syntax enable          "turn syntax highlighting on
     set autowrite          "automatically write file on exit
     set clipboard+=unnamed "Yanks go to clipboard
-    colorscheme desert     "pick a decent colorscheme
+    colorscheme default     "pick a decent colorscheme
     set background=light
-    set visualbell         "no beeping"
 
     let mapleader = ","
     let g:mapleader = ","
@@ -48,12 +49,12 @@ Bundle 'TagHighlight'
 " }
 
 " vim UI {
-    set ttyfast      "Assume a fast connection
-    set showmode     "Display the current mode
-    set showcmd      "Display incomplete commands below status line
-    set history=100  "Default was 20
-    set ruler        "Show the cursor location
-    set laststatus=2 "Always show status line
+    set ttyfast "Assume a fast connection
+    set showmode "Display the current mode
+    set showcmd "Display incomplete commands below status line
+    set history=100 "Default was 20
+    set ruler "Show the cursor location
+    set laststatus=2 "always show status line
     " Made uncessary by airline plugin
     "set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%l,%v]
     "              | | | | |  |   |      |  |     |  |
@@ -68,7 +69,6 @@ Bundle 'TagHighlight'
     "              | | +- readonly flag
     "              | +- modified flag
     "              +- full path to file
-    set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
 
     " Backspace over everything in insert mode
     set backspace=indent,eol,start
@@ -157,6 +157,7 @@ function! MapCR()
 " Re-highlight last search pattern
 nnoremap <leader>hs :set hlsearch<cr>
 
+
 " Plugin Specific configuration {
     " CtrlP settings
     let g:ctrlp_map = '<c-p>'
@@ -183,10 +184,13 @@ nnoremap <leader>hs :set hlsearch<cr>
 
     let JSHintUpdateWriteOnly=1
 
-    let g:used_javascript_libs = 'jquery'
-
-    " Close the tip window when an autocomplete selection is made,
-    " or when leaving insert mode
     autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
     autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+    " flake8
+    map <leader>a <Esc>:call Flake8()<cr>
+    " In the quick fix window, disable the remap that bound on <CR>
+    autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+    let g:flake8_show_in_gutter=1
+    let g:flake8_show_in_file=1
 " }
