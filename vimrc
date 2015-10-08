@@ -4,37 +4,33 @@ filetype off
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
-Plugin 'gmarik/vundle'
-Plugin 'bling/vim-airline'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'fugitive.vim'
+Bundle 'gmarik/vundle'
+Bundle 'bling/vim-airline'
+Bundle 'davidhalter/jedi-vim'
 Plugin 'jelera/vim-javascript-syntax'
-Plugin 'joestelmach/lint.vim'
-Plugin 'pangloss/vim-javascript'
+Plugin 'fugitive.vim'
 
 " Snipmate and its dependencies
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
+
 Plugin 'ervandew/supertab'
 
-
-Plugin 'kien/ctrlp.vim'
-Plugin 'mileszs/ack.vim'
+Bundle 'kien/ctrlp.vim'
+Bundle 'mileszs/ack.vim'
 Plugin 'othree/javascript-libraries-syntax.vim'
-"Plugin 'scrooloose/syntastic'
-Plugin 'tmhedberg/SimpylFold'
-"Plugin 'Townk/vim-autoclose'
-Plugin 'valloric/MatchTagAlways'
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'wookiehangover/jshint.vim'
+Bundle 'tmhedberg/SimpylFold'
+Bundle 'valloric/MatchTagAlways'
+"Bundle 'Valloric/YouCompleteMe'
+Bundle 'wookiehangover/jshint.vim'
 
-Plugin 'vim-flake8'
-Plugin 'pydoc.vim'
-Plugin 'RelOps'
-Plugin 'The-NERD-tree'
-Plugin 'taglist.vim'
-Plugin 'TagHighlight'
+Bundle 'vim-flake8'
+Bundle 'pydoc.vim'
+Bundle 'RelOps'
+Bundle 'The-NERD-tree'
+"Bundle 'taglist.vim'
+"Bundle 'TagHighlight'
 
 " General {
     filetype plugin indent on
@@ -43,6 +39,8 @@ Plugin 'TagHighlight'
     set clipboard+=unnamed "Yanks go to clipboard
     colorscheme default     "pick a decent colorscheme
     set background=light
+
+    set spell spelllang=en_us
 
     let mapleader = ","
     let g:mapleader = ","
@@ -57,6 +55,9 @@ Plugin 'TagHighlight'
     highlight ColorColumn ctermbg=magenta
     call matchadd('ColorColumn', '\%81v', 100)
 " }
+"
+" allow saving a sudo file if forgot to open as sudo
+cmap w!! w !sudo tee % >/dev/null
 
 " vim UI {
     set ttyfast "Assume a fast connection
@@ -65,7 +66,7 @@ Plugin 'TagHighlight'
     set history=100 "Default was 20
     set ruler "Show the cursor location
     set laststatus=2 "always show status line
-    " Made uncessary by airline plugin
+    " Made unnecessary by airline plugin
     "set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%l,%v]
     "              | | | | |  |   |      |  |     |  |
     "              | | | | |  |   |      |  |     |  +- current col
@@ -84,12 +85,12 @@ Plugin 'TagHighlight'
     set backspace=indent,eol,start
     " Invisible characters
     set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_,extends:❯,precedes:❮
-    set linespace=0                "keep chars right next to eachother
+    set linespace=0                "keep chars right next to each other
     set nu                         "show line numbers
     set showmatch                  "show matching brackets/prarens
     set hlsearch                   "highlight searches
     set incsearch                  "highlight as you search
-    set ignorecase                 "case insensitve search
+    set ignorecase                 "case insensitive search
     set smartcase                  "if searching with caps, require them
     set gdefault                   "set global replace as default
     set wildmenu                   "show list instead of just completing
@@ -120,11 +121,13 @@ Plugin 'TagHighlight'
     imap jj <esc>
     " save a key press
     map ; :
-    " make moving thorugh windows easier
+    " make moving through windows easier
     map <C-j> <C-w>j
     map <C-k> <C-w>k
     map <C-h> <C-w>h
     map <C-l> <C-w>l
+    " Double tab changes windows
+    map <Tab><Tab> <C-w>w
     "Treat long lines as break lines
     map j gj
     map k gk
@@ -134,7 +137,7 @@ Plugin 'TagHighlight'
     " EX mode doesn't do much for me, so map Q to run the macro
     " in the q register: qq = record, Q = run it
     map Q @q
-    " Swich working directory to dir of open buffer
+    " Switch working directory to dir of open buffer
     map <leader>cd :cd %:p:h<cr>:pwd<cr>
     " Open/Close NERDTree
     map <leader>f <Esc>:NERDTreeToggle<CR>
@@ -158,6 +161,11 @@ Plugin 'TagHighlight'
     nmap <down> :3wincmd -<CR>
 " }
 
+" Auto Commands {
+    " auto remove whitespace on buffer save
+    autocmd! BufWrite * mark ' | silent! %s/\s\+$// | norm ''
+" }
+
 " Clear last search highlighting with enter and clear the command line
 function! MapCR()
   nnoremap <cr> :nohlsearch<cr>:<backspace>
@@ -179,6 +187,19 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
     let g:ctrlp_working_path_mode = 0
     let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|htmlcov/|\.(o|swp|pyc|egg)$'
 
+    let g:ctrlp_use_caching = 0
+    if executable('ag')
+        set grepprg=ag\ --nogroup\ --nocolor
+
+        let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    else
+      let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+      let g:ctrlp_prompt_mappings = {
+        \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
+        \ }
+    endif
+
+
     " vim-airline settings
     " when only one tab is open, show all of the open buffers
     let g:airline#extensions#tabline#enabled = 1
@@ -190,11 +211,15 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
     let g:airline_symbols.branch = '⎇'
     let g:airline_symbols.paste = 'ρ'
     let g:airline_symbols.whitespace = 'Ξ'
+    let g:airline#extensions#branch#displayed_head_limit = 12
+
 
     " Preview docstrings on folded Python methods
-    let g:SimpylFold_docstring_preview = 1
+    "let g:SimpylFold_docstring_preview = 1
 
     let JSHintUpdateWriteOnly=1
+
+    "au FileType javascript call JavaScriptFold()
 
     autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
     autocmd InsertLeave * if pumvisible() == 0|pclose|endif
@@ -203,4 +228,15 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
     map <leader>a <Esc>:call Flake8()<cr>
     let g:flake8_show_in_gutter=1
     let g:flake8_show_in_file=1
+
+    " snipmate
+    " use zz as the command to insert snippets, prevents conflict from tab
+    imap zz <esc>a<Plug>snipMateNextOrTrigger
+    smap zz <Plug>snipMateNextOrTrigger
+
+    " have SuperTab work down the list, not up
+    let g:SuperTabDefaultCompletionType = "<c-n>"
+    let g:SuperTabContextDefaultCompletionType = "<c-n>"
+
+    let g:jedi#use_tabs_not_buffers=1
 " }
