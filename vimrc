@@ -4,27 +4,37 @@ filetype off
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'bling/vim-airline'
-"Bundle 'davidhalter/jedi-vim'
+Plugin 'gmarik/vundle'
+Plugin 'bling/vim-airline'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'fugitive.vim'
 Plugin 'jelera/vim-javascript-syntax'
+Plugin 'joestelmach/lint.vim'
+Plugin 'pangloss/vim-javascript'
 
-Bundle 'kien/ctrlp.vim'
-Bundle 'mileszs/ack.vim'
+" Snipmate and its dependencies
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'ervandew/supertab'
+
+
+Plugin 'kien/ctrlp.vim'
+Plugin 'mileszs/ack.vim'
 Plugin 'othree/javascript-libraries-syntax.vim'
-"Bundle 'scrooloose/syntastic'
-Bundle 'tmhedberg/SimpylFold'
-"Bundle 'Townk/vim-autoclose'
-Bundle 'valloric/MatchTagAlways'
-Bundle 'wookiehangover/jshint.vim'
+"Plugin 'scrooloose/syntastic'
+Plugin 'tmhedberg/SimpylFold'
+"Plugin 'Townk/vim-autoclose'
+Plugin 'valloric/MatchTagAlways'
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'wookiehangover/jshint.vim'
 
-Bundle 'vim-flake8'
-Bundle 'pydoc.vim'
-Bundle 'RelOps'
-Bundle 'The-NERD-tree'
-Bundle 'taglist.vim'
-Bundle 'TagHighlight'
+Plugin 'vim-flake8'
+Plugin 'pydoc.vim'
+Plugin 'RelOps'
+Plugin 'The-NERD-tree'
+Plugin 'taglist.vim'
+Plugin 'TagHighlight'
 
 " General {
     filetype plugin indent on
@@ -157,6 +167,8 @@ function! MapCR()
 " Re-highlight last search pattern
 nnoremap <leader>hs :set hlsearch<cr>
 
+" In the quickfix window, disable the remap that bound on <CR>
+autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 
 " Plugin Specific configuration {
     " CtrlP settings
@@ -189,8 +201,6 @@ nnoremap <leader>hs :set hlsearch<cr>
 
     " flake8
     map <leader>a <Esc>:call Flake8()<cr>
-    " In the quick fix window, disable the remap that bound on <CR>
-    autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
     let g:flake8_show_in_gutter=1
     let g:flake8_show_in_file=1
 " }

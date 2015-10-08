@@ -18,6 +18,9 @@ for file in $FILES; do
     echo "Creating symlink to $file in home directory."
     ln -s $DIR/$file ~/.$file
 done
+ln -s $DIR/flake8 ~/.config/flake8
+
+
 git submodule init
 git submodule update
 cp -r $DIR/vim ~/.vim
