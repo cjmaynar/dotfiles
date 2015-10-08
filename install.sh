@@ -20,6 +20,9 @@ for file in $FILES; do
 done
 ln -s $DIR/flake8 ~/.config/flake8
 
+# Link the snippets directory
+ls -s $DIR/snippets ~/.vim/
+
 
 git submodule init
 git submodule update

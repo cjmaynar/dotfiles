@@ -1,12 +1,12 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-Bundle 'gmarik/vundle'
-Bundle 'bling/vim-airline'
-Bundle 'davidhalter/jedi-vim'
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'bling/vim-airline'
+Plugin 'davidhalter/jedi-vim'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'fugitive.vim'
 
@@ -17,20 +17,22 @@ Plugin 'garbas/vim-snipmate'
 
 Plugin 'ervandew/supertab'
 
-Bundle 'kien/ctrlp.vim'
-Bundle 'mileszs/ack.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'mileszs/ack.vim'
 Plugin 'othree/javascript-libraries-syntax.vim'
-Bundle 'tmhedberg/SimpylFold'
-Bundle 'valloric/MatchTagAlways'
-"Bundle 'Valloric/YouCompleteMe'
-Bundle 'wookiehangover/jshint.vim'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'valloric/MatchTagAlways'
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'wookiehangover/jshint.vim'
 
-Bundle 'vim-flake8'
-Bundle 'pydoc.vim'
-Bundle 'RelOps'
-Bundle 'The-NERD-tree'
-"Bundle 'taglist.vim'
-"Bundle 'TagHighlight'
+Plugin 'vim-flake8'
+Plugin 'pydoc.vim'
+Plugin 'RelOps'
+Plugin 'The-NERD-tree'
+"Plugin 'taglist.vim'
+"Plugin 'TagHighlight'
+
+call vundle#end()
 
 " General {
     filetype plugin indent on
