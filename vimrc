@@ -5,32 +5,29 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'bling/vim-airline'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'fugitive.vim'
 
 " Snipmate and its dependencies
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 
+Plugin 'RelOps'
+Plugin 'SimpylFold'
+Plugin 'The-NERD-tree'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'bling/vim-airline'
+Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
-
+Plugin 'fugitive.vim'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
+Plugin 'klen/python-mode'
 Plugin 'mileszs/ack.vim'
 Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'valloric/MatchTagAlways'
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'wookiehangover/jshint.vim'
-
-Plugin 'vim-flake8'
 Plugin 'pydoc.vim'
-Plugin 'RelOps'
-Plugin 'The-NERD-tree'
-"Plugin 'taglist.vim'
-"Plugin 'TagHighlight'
+Plugin 'valloric/MatchTagAlways'
+Plugin 'wookiehangover/jshint.vim'
 
 call vundle#end()
 
@@ -122,7 +119,7 @@ cmap w!! w !sudo tee % >/dev/null
     " make getting out of insert easier
     imap jj <esc>
     " save a key press
-    map ; :
+    "map ; :
     " make moving through windows easier
     map <C-j> <C-w>j
     map <C-k> <C-w>k
@@ -227,7 +224,7 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
     autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
     " flake8
-    map <leader>a <Esc>:call Flake8()<cr>
+    map <leader>a <Esc>:PymodeLint<cr>
     let g:flake8_show_in_gutter=1
     let g:flake8_show_in_file=1
 
