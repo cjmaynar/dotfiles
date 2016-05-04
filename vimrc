@@ -11,13 +11,11 @@ Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 
+Plugin 'Konfekt/FastFold'
 Plugin 'RelOps'
-Plugin 'SimpylFold'
 Plugin 'The-NERD-tree'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'bling/vim-airline'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'ervandew/supertab'
 Plugin 'fugitive.vim'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'justinmk/vim-sneak'
@@ -25,7 +23,6 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'klen/python-mode'
 Plugin 'mileszs/ack.vim'
 Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'pydoc.vim'
 Plugin 'valloric/MatchTagAlways'
 Plugin 'wookiehangover/jshint.vim'
 
@@ -36,7 +33,7 @@ call vundle#end()
     syntax enable          "turn syntax highlighting on
     set autowrite          "automatically write file on exit
     set clipboard+=unnamed "Yanks go to clipboard
-    colorscheme default     "pick a decent colorscheme
+    colorscheme default    "pick a decent colorscheme
     set background=light
 
     set spell spelllang=en_us
@@ -54,7 +51,7 @@ call vundle#end()
     highlight ColorColumn ctermbg=magenta
     call matchadd('ColorColumn', '\%81v', 100)
 " }
-"
+
 " allow saving a sudo file if forgot to open as sudo
 cmap w!! w !sudo tee % >/dev/null
 
@@ -65,27 +62,13 @@ cmap w!! w !sudo tee % >/dev/null
     set history=100 "Default was 20
     set ruler "Show the cursor location
     set laststatus=2 "always show status line
-    " Made unnecessary by airline plugin
-    "set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%l,%v]
-    "              | | | | |  |   |      |  |     |  |
-    "              | | | | |  |   |      |  |     |  +- current col
-    "              | | | | |  |   |      |  |     +- current line
-    "              | | | | |  |   |      |  +- cur percent of file
-    "              | | | | |  |   |      +- cur syntax
-    "              | | | | |  |   +- cur fileformat
-    "              | | | | |  +- num lines
-    "              | | | | +- preview flag
-    "              | | | +- help flag
-    "              | | +- readonly flag
-    "              | +- modified flag
-    "              +- full path to file
 
     " Backspace over everything in insert mode
     set backspace=indent,eol,start
     " Invisible characters
     set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_,extends:❯,precedes:❮
     set linespace=0                "keep chars right next to each other
-    set nu                         "show line numbers
+    set number                     "show line numbers
     set showmatch                  "show matching brackets/prarens
     set hlsearch                   "highlight searches
     set incsearch                  "highlight as you search
@@ -138,14 +121,8 @@ cmap w!! w !sudo tee % >/dev/null
     map Q @q
     " Switch working directory to dir of open buffer
     map <leader>cd :cd %:p:h<cr>:pwd<cr>
-    " Open/Close NERDTree
-    map <leader>f <Esc>:NERDTreeToggle<CR>
-    " Open/Close TagList
-    map <leader>t <Esc>:TlistToggle<CR>
     " toggle set paste
     noremap <leader>p :set paste!<CR>
-    " Shortcut for ack
-    nnoremap <leader>a :Ack<Space>
     "Fold HTML tags
     nnoremap <leader>ft Vatzf
 
@@ -158,11 +135,17 @@ cmap w!! w !sudo tee % >/dev/null
     nmap <right> :3wincmd ><CR>
     nmap <up> :3wincmd +<CR>
     nmap <down> :3wincmd -<CR>
+
+    " Re-highlight last search pattern
+    nnoremap <leader>hs :set hlsearch<cr>
 " }
 
 " Auto Commands {
     " auto remove whitespace on buffer save
     autocmd! BufWrite * mark ' | silent! %s/\s\+$// | norm ''
+
+    " In the quickfix window, disable the remap that bound on <CR>
+    autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 " }
 
 " Clear last search highlighting with enter and clear the command line
@@ -171,11 +154,18 @@ function! MapCR()
   endfunction
   call MapCR()
 
-" Re-highlight last search pattern
-nnoremap <leader>hs :set hlsearch<cr>
+" Map tab to be a actual tab if the cursor is at the beginning of a word, other
+" wise triggers completion
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
 
-" In the quickfix window, disable the remap that bound on <CR>
-autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
 " Plugin Specific configuration {
     " CtrlP settings
@@ -198,13 +188,19 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
         \ }
     endif
 
+    " Open/Close NERDTree
+    map <leader>f <Esc>:NERDTreeToggle<CR>
+    let NERDTreeIgnore = ['\.pyc$']
+
+    " Shortcut for ack
+    nnoremap <leader>a :Ack<Space>
 
     " vim-airline settings
     " when only one tab is open, show all of the open buffers
     let g:airline#extensions#tabline#enabled = 1
     " user powerline patched fonts
     let g:airline_powerline_fonts = 1
-    let g:airline_theme = 'murmur'
+    "let g:airline_theme = 'murmur'
     " dict of configurably unicode symbols. mmmmmmmmmm
     let g:airline_symbols = {}
     let g:airline_symbols.branch = '⎇'
@@ -212,21 +208,16 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
     let g:airline_symbols.whitespace = 'Ξ'
     let g:airline#extensions#branch#displayed_head_limit = 12
 
-
-    " Preview docstrings on folded Python methods
-    "let g:SimpylFold_docstring_preview = 1
-
     let JSHintUpdateWriteOnly=1
+
 
     "au FileType javascript call JavaScriptFold()
 
     autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
     autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
-    " flake8
     map <leader>a <Esc>:PymodeLint<cr>
-    let g:flake8_show_in_gutter=1
-    let g:flake8_show_in_file=1
+    let g:pymode_options_max_line_length = 120
 
     " snipmate
     " use zz as the command to insert snippets, prevents conflict from tab
@@ -234,8 +225,8 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
     smap zz <Plug>snipMateNextOrTrigger
 
     " have SuperTab work down the list, not up
-    let g:SuperTabDefaultCompletionType = "<c-n>"
-    let g:SuperTabContextDefaultCompletionType = "<c-n>"
+    "let g:SuperTabDefaultCompletionType = "<c-n>"
+    "let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
-    let g:jedi#use_tabs_not_buffers=1
+    "let g:jedi#use_tabs_not_buffers=1
 " }
