@@ -14,17 +14,22 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'Konfekt/FastFold'
 Plugin 'RelOps'
 Plugin 'The-NERD-tree'
-"Plugin 'Valloric/YouCompleteMe'
 Plugin 'bling/vim-airline'
 Plugin 'fugitive.vim'
 Plugin 'jelera/vim-javascript-syntax'
+Plugin 'groenewege/vim-less'
 Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
-Plugin 'klen/python-mode'
-Plugin 'mileszs/ack.vim'
-Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'valloric/MatchTagAlways'
-Plugin 'wookiehangover/jshint.vim'
+Plugin 'altercation/vim-colors-solarized'
+"Plugin 'python-rope/rope'
+
+Plugin 'pangloss/vim-javascript'
+
+Plugin 'klen/python-mode'
+"Plugin 'mileszs/ack.vim'
+"Plugin 'wookiehangover/jshint.vim'
+Plugin 'Valloric/YouCompleteMe'
 
 call vundle#end()
 
@@ -33,8 +38,12 @@ call vundle#end()
     syntax enable          "turn syntax highlighting on
     set autowrite          "automatically write file on exit
     set clipboard+=unnamed "Yanks go to clipboard
-    colorscheme default    "pick a decent colorscheme
-    set background=light
+
+    set t_Co=256
+    let g:solarized_termcolors=256
+    colorscheme solarized    "pick a decent colorscheme
+    set background=dark
+
 
     set spell spelllang=en_us
 
@@ -101,8 +110,6 @@ cmap w!! w !sudo tee % >/dev/null
 
     " make getting out of insert easier
     imap jj <esc>
-    " save a key press
-    "map ; :
     " make moving through windows easier
     map <C-j> <C-w>j
     map <C-k> <C-w>k
@@ -110,9 +117,6 @@ cmap w!! w !sudo tee % >/dev/null
     map <C-l> <C-w>l
     " Double tab changes windows
     map <Tab><Tab> <C-w>w
-    "Treat long lines as break lines
-    map j gj
-    map k gk
     "Map space to search and ctr-space to back search
     map <space> /
     map <C-space> ?
@@ -130,14 +134,23 @@ cmap w!! w !sudo tee % >/dev/null
     nnoremap <tab> %
     vnoremap <tab> %
 
+    " Make Y yank everything from the cursor to the end of the line. This makes Y
+    " act more like C or D because by default, Y yanks the current line (i.e. the
+    " same as yy).
+    noremap Y y$
+
+    "Treat long lines as break lines
+    noremap <expr> k (v:count == 0 ? 'gk' : 'k')
+    nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
+
     " Use the arrow keys for changing window sizes
     nmap <left> :3wincmd <<CR>
     nmap <right> :3wincmd ><CR>
     nmap <up> :3wincmd +<CR>
     nmap <down> :3wincmd -<CR>
 
-    " Re-highlight last search pattern
-    nnoremap <leader>hs :set hlsearch<cr>
+    " Use <CR> to clear the highlighting of :set hlsearch.
+    nnoremap <silent> <CR> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 " }
 
 " Auto Commands {
@@ -147,12 +160,6 @@ cmap w!! w !sudo tee % >/dev/null
     " In the quickfix window, disable the remap that bound on <CR>
     autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 " }
-
-" Clear last search highlighting with enter and clear the command line
-function! MapCR()
-  nnoremap <cr> :nohlsearch<cr>:<backspace>
-  endfunction
-  call MapCR()
 
 " Map tab to be a actual tab if the cursor is at the beginning of a word, other
 " wise triggers completion
@@ -193,7 +200,7 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
     let NERDTreeIgnore = ['\.pyc$']
 
     " Shortcut for ack
-    nnoremap <leader>a :Ack<Space>
+    " nnoremap <leader>a :Ack<Space>
 
     " vim-airline settings
     " when only one tab is open, show all of the open buffers
@@ -218,6 +225,7 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
     map <leader>a <Esc>:PymodeLint<cr>
     let g:pymode_options_max_line_length = 120
+    "let g:pymode_rope = 0
 
     " snipmate
     " use zz as the command to insert snippets, prevents conflict from tab
@@ -229,4 +237,29 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
     "let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
     "let g:jedi#use_tabs_not_buffers=1
+    "
+    "
+    let g:javascript_plugin_jsdoc = 1
 " }
+
+" Enhanced python highlighting
+hi pythonLambdaExpr      ctermfg=105 guifg=#8787ff
+hi pythonInclude         ctermfg=68  guifg=#5f87d7 cterm=bold gui=bold
+hi pythonClass           ctermfg=167 guifg=#FF62B0 cterm=bold gui=bold
+hi pythonParameters      ctermfg=147 guifg=#AAAAFF
+hi pythonParam           ctermfg=175 guifg=#E37795
+hi pythonBrackets        ctermfg=183 guifg=#d7afff
+hi pythonClassParameters ctermfg=111 guifg=#FF5353
+hi pythonSelf            ctermfg=68  guifg=#5f87d7 cterm=bold gui=bold
+
+hi pythonDottedName      ctermfg=74  guifg=#5fafd7
+
+hi pythonError           ctermfg=196 guifg=#ff0000
+hi pythonIndentError     ctermfg=197 guifg=#ff005f
+hi pythonSpaceError      ctermfg=198 guifg=#ff0087
+
+hi pythonBuiltinType     ctermfg=74  guifg=#9191FF
+hi pythonBuiltinObj      ctermfg=71  guifg=#5faf5f
+hi pythonBuiltinFunc     ctermfg=169 guifg=#d75faf cterm=bold gui=bold
+
+hi pythonException       ctermfg=207 guifg=#CC3366 cterm=bold gui=bold
