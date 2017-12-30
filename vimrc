@@ -14,22 +14,20 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'Konfekt/FastFold'
 Plugin 'RelOps'
 Plugin 'The-NERD-tree'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'bling/vim-airline'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'fugitive.vim'
 Plugin 'jelera/vim-javascript-syntax'
-Plugin 'groenewege/vim-less'
 Plugin 'justinmk/vim-sneak'
-Plugin 'kien/ctrlp.vim'
 Plugin 'valloric/MatchTagAlways'
-Plugin 'altercation/vim-colors-solarized'
-"Plugin 'python-rope/rope'
-
 Plugin 'pangloss/vim-javascript'
 
-Plugin 'klen/python-mode'
-"Plugin 'mileszs/ack.vim'
-"Plugin 'wookiehangover/jshint.vim'
-Plugin 'Valloric/YouCompleteMe'
+" Syntax highlighting for LESS files
+Plugin 'groenewege/vim-less'
+
+Plugin 'python-mode/python-mode'
+"Plugin 'Valloric/YouCompleteMe'
 
 call vundle#end()
 
@@ -43,7 +41,6 @@ call vundle#end()
     let g:solarized_termcolors=256
     colorscheme solarized    "pick a decent colorscheme
     set background=dark
-
 
     set spell spelllang=en_us
 
@@ -134,9 +131,9 @@ cmap w!! w !sudo tee % >/dev/null
     nnoremap <tab> %
     vnoremap <tab> %
 
-    " Make Y yank everything from the cursor to the end of the line. This makes Y
-    " act more like C or D because by default, Y yanks the current line (i.e. the
-    " same as yy).
+    " Make Y yank everything from the cursor to the end of the line. This makes
+    " Y act more like C or D because by default, Y yanks the current line (i.e.
+    " the same as yy).
     noremap Y y$
 
     "Treat long lines as break lines
@@ -197,10 +194,7 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
     " Open/Close NERDTree
     map <leader>f <Esc>:NERDTreeToggle<CR>
-    let NERDTreeIgnore = ['\.pyc$']
-
-    " Shortcut for ack
-    " nnoremap <leader>a :Ack<Space>
+    let NERDTreeIgnore = ['\.pyc$', 'htmlcov']
 
     " vim-airline settings
     " when only one tab is open, show all of the open buffers
@@ -217,28 +211,19 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
     let JSHintUpdateWriteOnly=1
 
-
-    "au FileType javascript call JavaScriptFold()
-
     autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
     autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
     map <leader>a <Esc>:PymodeLint<cr>
     let g:pymode_options_max_line_length = 120
-    "let g:pymode_rope = 0
+    let g:pymode_rope_completion_bind='<tab>'
+    let g:pymode_paths=['/srv/git/bluvector/python/sfa_gui/sfa_gui']
 
     " snipmate
     " use zz as the command to insert snippets, prevents conflict from tab
     imap zz <esc>a<Plug>snipMateNextOrTrigger
     smap zz <Plug>snipMateNextOrTrigger
 
-    " have SuperTab work down the list, not up
-    "let g:SuperTabDefaultCompletionType = "<c-n>"
-    "let g:SuperTabContextDefaultCompletionType = "<c-n>"
-
-    "let g:jedi#use_tabs_not_buffers=1
-    "
-    "
     let g:javascript_plugin_jsdoc = 1
 " }
 

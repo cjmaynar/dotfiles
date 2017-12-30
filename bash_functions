@@ -54,3 +54,9 @@ cdp() {
             print(_.dirname(_.realpath(${1}.__file__[:-1])))"
         )"
 }
+
+
+function interact() {
+    container_id=`docker ps|grep $1|awk '{print $1}'`
+    docker exec -it $container_id /bin/bash
+}
