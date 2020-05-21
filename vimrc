@@ -1,37 +1,42 @@
-set nocompatible
-filetype off
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
 
-Plugin 'VundleVim/Vundle.vim'
+call plug#begin('~/.vim/plugged')
 
-" Snipmate and its dependencies
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'morhetz/gruvbox'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'justinmk/vim-sneak'
+Plug 'tpope/vim-commentary'
 
-Plugin 'Konfekt/FastFold'
-Plugin 'RelOps'
-Plugin 'The-NERD-tree'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'bling/vim-airline'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'fugitive.vim'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'justinmk/vim-sneak'
-Plugin 'valloric/MatchTagAlways'
-Plugin 'pangloss/vim-javascript'
+Plug 'Valloric/YouCompleteMe'
+"Plug 'davidhalter/jedi-vim'
 
-" Syntax highlighting for LESS files
-Plugin 'groenewege/vim-less'
+Plug 'pangloss/vim-javascript', { 'for': ['javascript*', '*html'] }
+Plug 'mxw/vim-jsx', { 'for': 'javascript*' }
+Plug 'othree/html5.vim', { 'for': '*html' }
+Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 
-Plugin 'python-mode/python-mode'
-"Plugin 'Valloric/YouCompleteMe'
+Plug 'valloric/MatchTagAlways', { 'on': [] }
+Plug 'vim-scripts/closetag.vim', { 'for': ['*html', 'xml', '*jsx'] }
 
-call vundle#end()
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+call plug#end()
+
+
 
 " General {
+    set fileformat=unix
+    set fileformats=unix
     filetype plugin indent on
     syntax enable          "turn syntax highlighting on
     set autowrite          "automatically write file on exit
@@ -39,7 +44,7 @@ call vundle#end()
 
     set t_Co=256
     let g:solarized_termcolors=256
-    colorscheme solarized    "pick a decent colorscheme
+    colorscheme gruvbox    "pick a decent colorscheme
     set background=dark
 
     set spell spelllang=en_us
@@ -53,9 +58,16 @@ call vundle#end()
     set nowb
     set noswapfile
 
+    " Don't pass messages to |ins-completion-menu|.
+    set shortmess+=c
+
+    " Always show the signcolumn, otherwise it would shift the text each time
+    " diagnostics appear/become resolved.
+    set signcolumn=yes
+
     " Mark 81st color for highlight
     highlight ColorColumn ctermbg=magenta
-    call matchadd('ColorColumn', '\%81v', 100)
+    call matchadd('ColorColumn', '\%81v', 110)
 " }
 
 " allow saving a sudo file if forgot to open as sudo
@@ -156,20 +168,12 @@ cmap w!! w !sudo tee % >/dev/null
 
     " In the quickfix window, disable the remap that bound on <CR>
     autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
-" }
 
-" Map tab to be a actual tab if the cursor is at the beginning of a word, other
-" wise triggers completion
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
+    " Place the cursor on the last known  location when opening a file
+    if has("autocmd")
+        au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
     endif
-endfunction
-
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+" }
 
 " Plugin Specific configuration {
     " CtrlP settings
@@ -194,14 +198,14 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
     " Open/Close NERDTree
     map <leader>f <Esc>:NERDTreeToggle<CR>
-    let NERDTreeIgnore = ['\.pyc$', 'htmlcov']
+    let NERDTreeIgnore = ['\.pyc$', 'htmlcov', '__pycache__', 'coverage']
 
     " vim-airline settings
     " when only one tab is open, show all of the open buffers
     let g:airline#extensions#tabline#enabled = 1
     " user powerline patched fonts
     let g:airline_powerline_fonts = 1
-    "let g:airline_theme = 'murmur'
+    let g:airline_theme = 'murmur'
     " dict of configurably unicode symbols. mmmmmmmmmm
     let g:airline_symbols = {}
     let g:airline_symbols.branch = '⎇'
@@ -209,15 +213,17 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
     let g:airline_symbols.whitespace = 'Ξ'
     let g:airline#extensions#branch#displayed_head_limit = 12
 
+
+    " Jedi-vim configuration
+    let g:jedi#show_call_signatures = 1
+    let g:jedi#popup_select_first = 0
+    let g:jedi#completions_enabled = 0
+    autocmd FileType python setlocal completeopt-=preview
+
     let JSHintUpdateWriteOnly=1
 
     autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
     autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-
-    map <leader>a <Esc>:PymodeLint<cr>
-    let g:pymode_options_max_line_length = 120
-    let g:pymode_rope_completion_bind='<tab>'
-    let g:pymode_paths=['/srv/git/bluvector/python/sfa_gui/sfa_gui']
 
     " snipmate
     " use zz as the command to insert snippets, prevents conflict from tab
