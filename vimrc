@@ -14,13 +14,12 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'justinmk/vim-sneak'
-Plug 'tpope/vim-commentary'
 
 Plug 'Valloric/YouCompleteMe'
-"Plug 'davidhalter/jedi-vim'
 
-Plug 'pangloss/vim-javascript', { 'for': ['javascript*', '*html'] }
-Plug 'mxw/vim-jsx', { 'for': 'javascript*' }
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
+
 Plug 'othree/html5.vim', { 'for': '*html' }
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
@@ -28,11 +27,12 @@ Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 Plug 'valloric/MatchTagAlways', { 'on': [] }
 Plug 'vim-scripts/closetag.vim', { 'for': ['*html', 'xml', '*jsx'] }
 
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'dense-analysis/ale'
+
+Plug 'Konfekt/FastFold'
+Plug 'tmhedberg/SimpylFold'
 
 call plug#end()
-
-
 
 " General {
     set fileformat=unix
@@ -126,9 +126,6 @@ cmap w!! w !sudo tee % >/dev/null
     map <C-l> <C-w>l
     " Double tab changes windows
     map <Tab><Tab> <C-w>w
-    "Map space to search and ctr-space to back search
-    map <space> /
-    map <C-space> ?
     " EX mode doesn't do much for me, so map Q to run the macro
     " in the q register: qq = record, Q = run it
     map Q @q
@@ -142,6 +139,9 @@ cmap w!! w !sudo tee % >/dev/null
     " Make tab move between matching brackets
     nnoremap <tab> %
     vnoremap <tab> %
+
+    " Use YouCompleteMe to go to definition of what the cursor is on
+    nnoremap <leader>d :tab split \| YcmCompleter GoToDefinition<CR>
 
     " Make Y yank everything from the cursor to the end of the line. This makes
     " Y act more like C or D because by default, Y yanks the current line (i.e.
@@ -173,7 +173,15 @@ cmap w!! w !sudo tee % >/dev/null
     if has("autocmd")
         au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
     endif
+
+    " Fold all python files
+    noremap <space> za
 " }
+
+" { Abbreviations
+ab ip import ipdb; ipdb.set_trace()
+ab wcl window.console.log
+"}
 
 " Plugin Specific configuration {
     " CtrlP settings
@@ -198,7 +206,7 @@ cmap w!! w !sudo tee % >/dev/null
 
     " Open/Close NERDTree
     map <leader>f <Esc>:NERDTreeToggle<CR>
-    let NERDTreeIgnore = ['\.pyc$', 'htmlcov', '__pycache__', 'coverage']
+    let NERDTreeIgnore = ['\.pyc$', 'htmlcov', '__pycache__', 'coverage', '\.egg-info']
 
     " vim-airline settings
     " when only one tab is open, show all of the open buffers
@@ -225,13 +233,8 @@ cmap w!! w !sudo tee % >/dev/null
     autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
     autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
-    " snipmate
-    " use zz as the command to insert snippets, prevents conflict from tab
-    imap zz <esc>a<Plug>snipMateNextOrTrigger
-    smap zz <Plug>snipMateNextOrTrigger
-
     let g:javascript_plugin_jsdoc = 1
-" }
+" }"
 
 " Enhanced python highlighting
 hi pythonLambdaExpr      ctermfg=105 guifg=#8787ff
