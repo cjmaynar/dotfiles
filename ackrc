@@ -1,8 +1,18 @@
 # Ignore the directory created by coverage
 --ignore-dir=htmlcov
+--ignore-dir=coverage
+--ignore-dir=.coverage
+--ignore-dir=.tox
 --ignore-dir=.ropeproject
+--ignore-file=match:application.css
+--ignore-file=match:vendors~main.css
+--ignore-file=match:main.application.js
+--ignore-file=match:vendors.application.js
 --ignore-file=match:bundle.js
 --ignore-file=match:min.js
 --ignore-file=is:tags
 --ignore-file=is:types_py.taghl
+--ignore-file=is:.jest-test-results.json
+--type-add
+css=.sass,.scss
 --pager=less -r
